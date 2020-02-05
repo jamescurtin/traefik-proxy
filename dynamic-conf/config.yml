@@ -1,0 +1,28 @@
+http:
+  middlewares:
+    redirect-to-https:
+      redirectScheme:
+        scheme: https
+    error-pages:
+      errors:
+        status:
+          - "400-499"
+          - "500-599"
+        service: handle-errors@docker
+        query: "/{status}"
+
+  routers:
+    http-catchall:
+      entrypoints:
+        - web
+      middlewares:
+        - error-pages
+        - redirect-to-https
+      rule: hostregexp(`{host:.+}`)
+      service: noop
+
+  services:
+    noop:
+      loadBalancer:
+        servers:
+          - url: http://192.168.0.1

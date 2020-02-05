@@ -1,0 +1,49 @@
+version: "3.7"
+
+services:
+  docker-socket-proxy:
+    environment:
+      CONTAINERS: 1
+    image: tecnativa/docker-socket-proxy
+    networks:
+      - docker-socket-proxy
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  handle-errors:
+    build:
+      context: ./handle-errors
+    networks:
+      - traefik
+    restart: always
+
+  traefik:
+    depends_on:
+      - docker-socket-proxy
+      - handle-errors
+    env_file:
+      - .env
+    image: traefik:v2.1
+    networks:
+      - docker-socket-proxy
+      - traefik
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    volumes:
+      - ./traefik.yml:/etc/traefik/traefik.yml
+      - ./dynamic-conf:/etc/traefik/dynamic-conf
+      - ./acme:/etc/acme
+
+  whoami:
+    image: containous/whoami
+    container_name: simple-service
+    networks:
+      - traefik
+
+networks:
+  docker-socket-proxy:
+  traefik:
+    external: true

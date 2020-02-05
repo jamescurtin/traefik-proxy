@@ -1,0 +1,34 @@
+accessLog: {}
+
+api:
+  dashboard: true
+
+certificatesResolvers:
+  lets-encrypt:
+    acme:
+      email: placeholder@example.com # Set via environment variable
+      storage: etc/acme/acme.json
+      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory" # Set via environment variable
+      httpChallenge:
+        entryPoint: web
+
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: false
+
+log:
+  level: debug # Set via environment variable
+
+providers:
+  docker:
+    endpoint: tcp://docker-socket-proxy:2375
+    exposedByDefault: false
+  file:
+    directory: /etc/traefik/dynamic-conf
+    watch: true
