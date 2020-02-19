@@ -13,12 +13,11 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.traefik.entrypoints=websecure
-      - traefik.http.routers.traefik.middlewares=error-pages@file
+      - traefik.http.routers.traefik.middlewares=error-pages@file, auth
       - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_HOST}`)
       - traefik.http.routers.traefik.service=api@internal
       - traefik.http.routers.traefik.tls.certresolver=letsencrypt
       - traefik.http.routers.traefik.tls=true
-      - traefik.http.routers.traefik.middlewares=auth
       - traefik.http.middlewares.auth.basicauth.usersfile=/etc/traefik-dashboard/usersfile
   whoami:
     labels:
