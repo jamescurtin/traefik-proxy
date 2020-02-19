@@ -6,7 +6,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.handle-errors.entrypoints=websecure
       - traefik.http.routers.handle-errors.rule=Host(`${HANDLE_ERRORS_HOST}`)
-      - traefik.http.routers.handle-errors.tls.certresolver=lets-encrypt
+      - traefik.http.routers.handle-errors.tls.certresolver=letsencrypt
       - traefik.http.routers.handle-errors.tls=true
       - traefik.http.services.handle-errors.loadbalancer.server.port=8080
   traefik:
@@ -16,13 +16,15 @@ services:
       - traefik.http.routers.traefik.middlewares=error-pages@file
       - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_HOST}`)
       - traefik.http.routers.traefik.service=api@internal
-      - traefik.http.routers.traefik.tls.certresolver=lets-encrypt
+      - traefik.http.routers.traefik.tls.certresolver=letsencrypt
       - traefik.http.routers.traefik.tls=true
+      - traefik.http.routers.traefik.middlewares=auth
+      - traefik.http.middlewares.auth.basicauth.usersfile=/etc/traefik-dashboard/usersfile
   whoami:
     labels:
       - traefik.enable=true
       - traefik.http.routers.whoami.entrypoints=websecure
       - traefik.http.routers.whoami.middlewares=error-pages@file
       - traefik.http.routers.whoami.rule=Host(`${WHOAMI_HOST}`)
-      - traefik.http.routers.whoami.tls.certresolver=lets-encrypt
+      - traefik.http.routers.whoami.tls.certresolver=letsencrypt
       - traefik.http.routers.whoami.tls=true

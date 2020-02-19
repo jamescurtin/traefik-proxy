@@ -5,6 +5,8 @@
 .PHONY: configure-local-settings
 .configure-local-settings:
 	@touch -a acme/acme.json && chmod 600 acme/acme.json
+	@touch -a traefik-dashboard-userfile
+	@printf "\033[1;33mWarning:\033[0m Before proceeding, you must add users for Traefik dashboard basic auth via the command \033[1;34mhtpasswd -B traefik-dashboard-userfile <USERNAME>\033[0m\n"
 	@cp -n .env.example .env || true
 
 .PHONY: build
@@ -13,7 +15,7 @@
 
 .PHONY: up
 .up:
-	@echo "Starting service..." && source .env && docker-compose up -d
+	@echo "Starting service..." && docker-compose up -d
 
 .PHONY: clean
 .clean:

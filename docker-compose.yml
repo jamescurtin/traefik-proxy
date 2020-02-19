@@ -35,6 +35,7 @@ services:
     volumes:
       - ./traefik.yml:/etc/traefik/traefik.yml
       - ./dynamic-conf:/etc/traefik/dynamic-conf
+      - ./traefik-dashboard-userfile:/etc/traefik-dashboard/usersfile
       - ./acme:/etc/acme
 
   whoami:

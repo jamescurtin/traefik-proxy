@@ -4,11 +4,9 @@ api:
   dashboard: true
 
 certificatesResolvers:
-  lets-encrypt:
+  letsencrypt:
     acme:
-      email: placeholder@example.com # Set via environment variable
-      storage: etc/acme/acme.json
-      caServer: "https://acme-staging-v02.api.letsencrypt.org/directory" # Set via environment variable
+      storage: /etc/acme/acme.json
       httpChallenge:
         entryPoint: web
 
