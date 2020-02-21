@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+programname=$0
+
+function usage {
+    echo "usage: $programname <file>"
+    echo "Adds LDAP entries from ldif file."
+    exit 1
+}
+
+if [ "$#" -ne 1 ]
+then
+  usage
+fi
+
+if [ ! -f $1 ]; then
+    echo "File not found!"
+    usage
+fi
+
+PARDIR=$(dirname $(dirname $(realpath "$0")))
+source ${PARDIR}/.env
+
+
+
+docker-compose run \
+    --rm \
+    -v $(realpath $1):/tmp/ldapadd.ldif \
+    --entrypoint="ldapadd -x -c -D \"cn=admin,dc=example,dc=org\" -w \"${LDAP_ADMIN_PASSWORD}\" -f /tmp/ldapadd.ldif -H ldap://authelia-openldap" \
+    openldap

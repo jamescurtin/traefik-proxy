@@ -1,0 +1,51 @@
+host: 0.0.0.0
+port: 9091
+
+authentication_backend:
+  ldap:
+    url: ldap://authelia-openldap
+    base_dn: dc=example,dc=org
+    additional_users_dn: ou=users
+    users_filter: (cn={0})
+    additional_groups_dn: ou=groups
+    groups_filter: (&(member={dn})(objectclass=groupOfNames))
+    group_name_attribute: cn
+    mail_attribute: mail
+    user: cn=admin,dc=example,dc=org
+
+access_control:
+  default_policy: deny
+  rules: # TODO: Make rules dynamic
+    - domain: "auth.docker.localhost"
+      policy: bypass
+    - domain: "*.docker.localhost"
+      policy: two_factor
+
+session:
+  name: authelia_session
+  expiration: 3600 # 1 hour
+  inactivity: 300 # 5 minutes
+  domain: docker.localhost # TODO: Make session dynamic
+
+  redis:
+    host: authelia-redis
+    port: 6379
+
+regulation:
+  max_retries: 3
+  find_time: 120
+  ban_time: 300
+
+storage:
+  postgres:
+    host: authelia-postgres
+    port: 5432
+    database: authelia
+    username: authelia
+
+notifier:
+  smtp: # TODO: Make smtp parameters dynamic
+    username: changeme@gmail.com
+    sender: no-reply@auth.docker.localhost
+    host: smtp.gmail.com
+    port: 587

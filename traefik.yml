@@ -20,9 +20,6 @@ global:
   checkNewVersion: true
   sendAnonymousUsage: false
 
-log:
-  level: debug # Set via environment variable
-
 providers:
   docker:
     endpoint: tcp://docker-socket-proxy:2375

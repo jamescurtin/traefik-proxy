@@ -1,0 +1,21 @@
+dn: ou=groups,dc=example,dc=org
+objectclass: organizationalUnit
+ou: groups
+
+dn: ou=users,dc=example,dc=org
+objectclass: organizationalUnit
+ou: users
+
+dn: uid=changeme,ou=users,dc=example,dc=org
+objectClass: inetOrgPerson
+objectClass: posixAccount
+cn: changeme
+sn: changeme
+uid: changeme
+uidNumber: 2000
+gidNumber: 901
+homeDirectory: /home/changeme
+loginShell: /bin/bash
+gecos: adam
+userPassword: {CRYPT}$6$m9ho0LCARJ6Mq6gQ$TOBBEZpOwzjGFtxxKVTmePG/hnqp5TjQFe.y/SiDca8PL81eoUGwfBoBrFSJDXgSxmrFxc/vtT9WyUnZK8r8f0
+mail: changeme@example.com

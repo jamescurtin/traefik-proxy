@@ -1,14 +1,22 @@
 http:
   middlewares:
+    secured:
+      chain:
+        middlewares:
+          - auth@docker
+          - redirect-to-https
+          - error-pages
+
     redirect-to-https:
       redirectScheme:
         scheme: https
+
     error-pages:
       errors:
         status:
           - "400-499"
           - "500-599"
-        service: handle-errors@docker
+        service: handle-errors-traefik-proxy@docker
         query: "/{status}"
 
   routers:
@@ -16,8 +24,8 @@ http:
       entrypoints:
         - web
       middlewares:
-        - error-pages
         - redirect-to-https
+        - error-pages
       rule: hostregexp(`{host:.+}`)
       service: noop
 

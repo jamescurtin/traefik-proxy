@@ -1,6 +1,13 @@
 version: "3.7"
 
 services:
+  authelia:
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.authelia.entrypoints=websecure
+      - traefik.http.routers.authelia.rule=Host(`${AUTHELIA_HOST}`)
+      - traefik.http.routers.authelia.tls.certresolver=letsencrypt
+      - traefik.http.routers.authelia.tls=true
   handle-errors:
     labels:
       - traefik.enable=true
@@ -8,22 +15,21 @@ services:
       - traefik.http.routers.handle-errors.rule=Host(`${HANDLE_ERRORS_HOST}`)
       - traefik.http.routers.handle-errors.tls.certresolver=letsencrypt
       - traefik.http.routers.handle-errors.tls=true
-      - traefik.http.services.handle-errors.loadbalancer.server.port=8080
   traefik:
     labels:
       - traefik.enable=true
+      - traefik.http.middlewares.auth.forwardauth.address=${AUTHELIA_REDIRECT}
       - traefik.http.routers.traefik.entrypoints=websecure
-      - traefik.http.routers.traefik.middlewares=error-pages@file, auth
+      - traefik.http.routers.traefik.middlewares=secured@file
       - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_HOST}`)
       - traefik.http.routers.traefik.service=api@internal
       - traefik.http.routers.traefik.tls.certresolver=letsencrypt
       - traefik.http.routers.traefik.tls=true
-      - traefik.http.middlewares.auth.basicauth.usersfile=/etc/traefik-dashboard/usersfile
   whoami:
     labels:
       - traefik.enable=true
       - traefik.http.routers.whoami.entrypoints=websecure
-      - traefik.http.routers.whoami.middlewares=error-pages@file
+      - traefik.http.routers.whoami.middlewares=secured@file
       - traefik.http.routers.whoami.rule=Host(`${WHOAMI_HOST}`)
       - traefik.http.routers.whoami.tls.certresolver=letsencrypt
       - traefik.http.routers.whoami.tls=true
