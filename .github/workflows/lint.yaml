@@ -1,0 +1,40 @@
+name: Linting
+on: push
+
+jobs:
+  yaml-lint:
+    name: Run yaml linting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+      - name: Install yamllint
+        run: pip install yamllint==1.24.2
+      - name: Run yamllint
+        run: yamllint .
+  shellcheck:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@c489c81f79527f818be72b97b918b06e75eaee6d
+        with:
+          check_together: "yes"
+        env:
+          SHELLCHECK_OPTS: -e SC2034 --shell=bash
+  shfmt:
+    name: Shell format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.15.x
+      - name: Install shfmt
+        run: GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
+      - name: Check formatting
+        run: shfmt -s -d .

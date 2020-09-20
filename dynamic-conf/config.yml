@@ -14,10 +14,10 @@ http:
     error-pages:
       errors:
         status:
-          - "400-499"
-          - "500-599"
+          - 400-499
+          - 500-599
         service: handle-errors-traefik-proxy@docker
-        query: "/{status}"
+        query: /{status}
 
   routers:
     http-catchall:

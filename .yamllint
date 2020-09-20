@@ -1,0 +1,23 @@
+---
+extends: default
+
+rules:
+  document-start: disable
+  comments:
+    require-starting-space: true
+    min-spaces-from-content: 1
+  key-duplicates: {}
+  comments-indentation: false
+  empty-lines: {max: 1}
+  quoted-strings:
+    quote-type: double
+    required: only-when-needed
+    extra-allowed: [^~.*]
+  line-length:
+    max: 84
+    level: warning
+  new-line-at-end-of-file: enable
+  new-lines: enable
+  trailing-spaces: enable
+  truthy:
+    allowed-values: ["true", "false", "on"]
