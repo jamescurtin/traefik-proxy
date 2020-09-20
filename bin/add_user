@@ -26,5 +26,7 @@ source ${PARDIR}/.env
 docker-compose run \
     --rm \
     -v $(realpath $1):/tmp/ldapadd.ldif \
-    --entrypoint="ldapadd -x -c -D \"cn=admin,dc=example,dc=org\" -w \"${LDAP_ADMIN_PASSWORD}\" -f /tmp/ldapadd.ldif -H ldap://authelia-openldap" \
-    openldap
+    -v ${PARDIR}/authelia/_add_user.sh:/tmp/add_user.sh \
+    --entrypoint="/bin/bash" \
+    openldap \
+    /tmp/add_user.sh

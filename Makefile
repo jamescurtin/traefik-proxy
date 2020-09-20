@@ -4,8 +4,10 @@
 
 .PHONY: configure-local-settings
 .configure-local-settings:
+	@mkdir -p acme
 	@touch -a acme/acme.json && chmod 600 acme/acme.json
 	@cp -n .env.example .env || true
+	@cp -n -R authelia/secrets.example authelia/secrets && chmod 600 authelia/secrets/* || true
 
 .PHONY: build
 .build:

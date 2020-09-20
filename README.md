@@ -16,7 +16,7 @@ Other features include:
 * Self-hosted SSO authentication ([Authelia](https://www.authelia.com/)), including support for security keys and one-time password generators
 * User-friendly 4XX & 5XX status pages
 * Pre-configured file provider (for shared routers and middleware) and Docker provider (for everything else)
-* Centralized configuration via environment variables
+* Centralized configuration via environment variables and Docker secrets
 
 ## Getting Started
 
@@ -28,11 +28,18 @@ $ cd traefik-proxy
 $ make
 ```
 
-Create a user that will be used to authenticate:
+Running `make` creates an `.env` file and the `authelia/secrets` directory. The
+`.env` file should be updated to include hostnames for additional hosts that are
+configured. The `authelia/secrets` directory contains secrets for configuring
+all services. The default values should be changed before deploying.
 
-```console
-$ bin/add_user /path/to/file.ldif
-```
+There are additional configuration files that need to be customized. All places where
+customization is necessary are marked with `CHANGEME` comments.
+
+The command will also create the external docker network `traefik`. Other docker
+services that you plan to expose via Traefik should be added to this network.
+
+## Creating a LDAP user
 
 The following will create a default user named `changeme` with the password `insecure`:
 

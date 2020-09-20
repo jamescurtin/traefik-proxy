@@ -12,6 +12,7 @@ objectClass: posixAccount
 cn: changeme
 sn: changeme
 uid: changeme
+displayname: Example User
 uidNumber: 2000
 gidNumber: 901
 homeDirectory: /home/changeme

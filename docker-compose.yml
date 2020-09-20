@@ -9,13 +9,26 @@ services:
       - redis
     env_file:
       - .env
-    image: authelia/authelia:4
+    environment:
+      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE: /run/secrets/ldap-admin
+      AUTHELIA_JWT_SECRET_FILE: /run/secrets/jwt
+      AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE: /run/secrets/smtp
+      AUTHELIA_SESSION_SECRET_FILE: /run/secrets/session
+      AUTHELIA_STORAGE_POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
+      TZ: America/New_York
+    secrets:
+      - jwt
+      - ldap-admin
+      - postgres-password
+      - session
+      - smtp
+    image: authelia/authelia:4.21
     networks:
       - authelia
       - traefik
     restart: always
     volumes:
-      - ./authelia/configuration.yml:/etc/authelia/configuration.yml:ro
+      - ./authelia:/config
 
   docker-socket-proxy:
     environment:
@@ -36,9 +49,13 @@ services:
 
   openldap:
     container_name: authelia-openldap
-    image: osixia/openldap:1.3.0
-    env_file:
-      - .env
+    image: osixia/openldap:1.4.0
+    environment:
+      LDAP_ADMIN_PASSWORD_FILE: /run/secrets/ldap-admin
+      LDAP_CONFIG_PASSWORD_FILE: /run/secrets/ldap-config
+    secrets:
+      - ldap-admin
+      - ldap-config
     networks:
       - authelia
     restart: always
@@ -50,6 +67,10 @@ services:
     container_name: authelia-postgres
     env_file:
       - .env
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
+    secrets:
+      - postgres-password
     image: postgres:9.6-alpine
     networks:
       - authelia
@@ -59,7 +80,8 @@ services:
 
   redis:
     container_name: authelia-redis
-    image: redis:5-alpine
+    image: redis:6.0-alpine
+    restart: always
     networks:
       - authelia
 
@@ -70,7 +92,7 @@ services:
       - handle-errors
     env_file:
       - .env
-    image: traefik:v2.1
+    image: traefik:v2.3
     networks:
       - docker-socket-proxy
       - traefik
@@ -85,9 +107,23 @@ services:
 
   whoami:
     container_name: simple-service
-    image: containous/whoami
+    image: containous/whoami:v1.5.0
     networks:
       - traefik
+
+secrets:
+  jwt:
+    file: authelia/secrets/jwt
+  postgres-password:
+    file: authelia/secrets/postgres-password
+  session:
+    file: authelia/secrets/session
+  smtp:
+    file: authelia/secrets/smtp
+  ldap-admin:
+    file: authelia/secrets/ldap-admin
+  ldap-config:
+    file: authelia/secrets/ldap-config
 
 networks:
   authelia:
