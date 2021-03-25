@@ -13,6 +13,7 @@ RUN adduser \
     "${USER}"
 
 WORKDIR $GOPATH/src
+COPY go.mod ./
 COPY main.go ./
 
 RUN CGO_ENABLED=0 go build \
