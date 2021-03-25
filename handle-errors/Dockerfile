@@ -13,8 +13,7 @@ RUN adduser \
     "${USER}"
 
 WORKDIR $GOPATH/src
-COPY go.mod ./
-COPY main.go ./
+COPY main.go go.mod ./
 
 RUN CGO_ENABLED=0 go build \
     -ldflags='-w -s -extldflags "-static"' -a \
