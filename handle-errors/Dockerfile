@@ -1,4 +1,4 @@
-FROM golang:alpine AS builder
+FROM golang:1.16-alpine3.13 AS builder
 
 ENV USER=appuser
 ENV UID=10001
@@ -13,8 +13,7 @@ RUN adduser \
     "${USER}"
 
 WORKDIR $GOPATH/src
-COPY go.mod ./
-COPY main.go ./
+COPY main.go go.mod ./
 
 RUN CGO_ENABLED=0 go build \
     -ldflags='-w -s -extldflags "-static"' -a \
