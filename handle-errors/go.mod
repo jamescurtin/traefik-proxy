@@ -1,3 +1,3 @@
 module github.com/jamescurtin/traefik-proxy/handle-errors
 
-go 1.16
+go 1.17
