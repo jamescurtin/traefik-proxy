@@ -49,7 +49,7 @@ services:
 
   openldap:
     container_name: authelia-openldap
-    image: osixia/openldap:1.4.0
+    image: osixia/openldap:1.5.0
     environment:
       LDAP_ADMIN_PASSWORD_FILE: /run/secrets/ldap-admin
       LDAP_CONFIG_PASSWORD_FILE: /run/secrets/ldap-config
