@@ -92,7 +92,7 @@ services:
       - handle-errors
     env_file:
       - .env
-    image: traefik:v2.3
+    image: traefik:v2.5
     networks:
       - docker-socket-proxy
       - traefik
