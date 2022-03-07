@@ -22,7 +22,7 @@ services:
       - postgres-password
       - session
       - smtp
-    image: authelia/authelia:4.33
+    image: authelia/authelia:4.34
     networks:
       - authelia
       - traefik
