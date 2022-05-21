@@ -12,7 +12,6 @@ excludes+=(! -path */meta/dotbot/*)
 
 readarray -d '' filepaths < <(find . -type f "${excludes[@]}" \
 	'(' \
-	\
 	-name '*.bash' \
 	-o -name '.bashrc' \
 	-o -name 'bashrc' \
@@ -40,7 +39,6 @@ readarray -d '' filepaths < <(find . -type f "${excludes[@]}" \
 	-o -path '*/profile' \
 	-o -name '*.shlib' \
 	')' \
-	\
 	-print0)
 
 readarray -d '' tmp < <(find . "${excludes[@]}" -type f ! -name '*.*' -print0)
