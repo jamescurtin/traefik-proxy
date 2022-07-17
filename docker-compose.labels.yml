@@ -35,3 +35,11 @@ services:
       - traefik.http.routers.whoami.rule=Host(`${WHOAMI_HOST}`)
       - traefik.http.routers.whoami.tls.certresolver=letsencrypt
       - traefik.http.routers.whoami.tls=true
+  secure-whoami:
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.secure-whoami.entrypoints=websecure
+      - traefik.http.routers.secure-whoami.middlewares=secured@file
+      - traefik.http.routers.secure-whoami.rule=Host(`${SECURE_HOST}`)
+      - traefik.http.routers.secure-whoami.tls.certresolver=letsencrypt
+      - traefik.http.routers.secure-whoami.tls=true

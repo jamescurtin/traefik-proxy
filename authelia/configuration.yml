@@ -22,6 +22,8 @@ authentication_backend:
       parallelism: 4
       memory: 64
 
+# Read https://www.authelia.com/configuration/security/access-control/ carefully
+# It is easy to misconfigure these.
 access_control:
   default_policy: deny
   rules:
@@ -29,8 +31,14 @@ access_control:
     # The auth domain should always be set to bypass.
     - domain: auth.docker.localhost
       policy: bypass
-    - domain: "*.docker.localhost"
+    - domain: whoami.docker.localhost
+      policy: bypass
+    - domain: traefik.docker.localhost
+      policy: one_factor
+    - domain: secure.docker.localhost
       policy: two_factor
+      subject:
+        - group:admin
 
 session:
   name: authelia_session

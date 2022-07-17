@@ -6,7 +6,7 @@ One-step (secure) configuration for [Traefik](https://docs.traefik.io/) edge rou
 
 Keeping in mind security first, this project ensures:
 
-* The Docker daemon socket is never mounted to traefik or any container with external networking (See the [risks](https://docs.docker.com/engine/security/security/#docker-daemon-attack-surface) of exposing the Docker daemon)
+* The Docker daemon socket is never mounted to traefik or any container with external networking (See the [risks](https://docs.docker.com/engine/security/#docker-daemon-attack-surface) of exposing the Docker daemon)
 * HTTPS redirection is automatically configured for all routers
 * TLS is always enabled, even locally (can confidently test new services locally without needing a dev config that differs significantly from prod)
 * The Traefik dashboard is never launched in insecure mode
@@ -33,11 +33,14 @@ Running `make` creates an `.env` file and the `authelia/secrets` directory. The
 configured. The `authelia/secrets` directory contains secrets for configuring
 all services. The default values should be changed before deploying.
 
-There are additional configuration files that need to be customized. All places where
-customization is necessary are marked with `CHANGEME` comments.
+There are additional configuration files that need to be customized before you can
+deploy in a production environment. All places where customization is necessary
+are marked with `CHANGEME` comments.
 
 The command will also create the external docker network `traefik`. Other docker
 services that you plan to expose via Traefik should be added to this network.
+
+See the [Exploring](#exploring) section for more information.
 
 ## Users
 
@@ -47,6 +50,8 @@ Authelia users are defined in `authelia/users.yml`.
 
 By default, this ships with two users (both have the password `insecure`).
 One is a member of a group called `admin`, and the other has no group memberships.
+See the [Exploring](#exploring) section to see how group membership can be used
+for access control.
 
 ### Creating a user
 
@@ -64,15 +69,30 @@ which will prompt for the user's information, and add an entry to the user file
 
 **Make sure to remove the default users before deploying!**
 
+## Exploring
+
 **Note**: When run locally (_e.g._ on `localhost`), Traefik uses a self-signed SSL certificate. Therefore, web-browser security warnings are expected and can be safely bypassed.
+When deployed on any other domain, it will use Let's Encrypt certificates.
 
 To explore, navigate to:
 
-* [https://whoami.docker.localhost](https://whoami.docker.localhost) ("Hello world" container provided by the creators of Traefik)
 * [https://traefik.docker.localhost](https://traefik.docker.localhost) (Traefik configuration dashboard)
+  * Requires login: see the [Users](#users) section for more information.
+* [https://whoami.docker.localhost](https://whoami.docker.localhost) ("Hello world" example)
+* [https://secure.docker.localhost](https://secure.docker.localhost) ("Hello world" example demonstrating ACLs and 2FA)
+  * See the [Users](#users) section for more information about the default users.
+  * See the `access_control` section of `authelia/configuration.yml` to understand how access is configured.
+  * First, attempt to log in with the user `user-changeme`. Access should be denied, because the user isn't a member of the required group
+  * Next, go to auth.docker.localhost and log out.
+  * Then, go back to secure.docker.localhost to log in with user `admin-changeme`. Access should be granted, based on user group.
+    * See the [Users](#users) section for information on how 2FA is configured by default.
 * [https://auth.docker.localhost](https://auth.docker.localhost) (SSO Auth service)
-* [https://docker.localhost](https://docker.localhost) (Doesn't match any routing rule, so will display a user-friendly HTTP error code)
+* [https://traefik.docker.localhost/nonexistent](https://traefik.docker.localhost/nonexistent) (This page doesn't exist, and is therefore re-routed to a custom error page)
 
-### Details
+## Testing
 
-By running the `make` command, an external Docker network, `traefik`, will be created, which can be used to link any Docker container to Traefik. It also checks for the existence of `.env` and `acme/acme.json`, creating them if they do not exist.
+Run the test suite locally via
+
+```bash
+.github/scripts/test.sh
+```
