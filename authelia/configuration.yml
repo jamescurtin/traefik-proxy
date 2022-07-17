@@ -12,18 +12,15 @@ totp:
   skew: 1
 
 authentication_backend:
-  ldap:
-    additional_groups_dn: ou=groups
-    additional_users_dn: ou=users
-    base_dn: dc=example,dc=org
-    display_name_attribute: displayname
-    group_name_attribute: cn
-    groups_filter: (&(member={dn})(objectclass=groupOfNames))
-    mail_attribute: mail
-    url: ldap://authelia-openldap
-    user: cn=admin,dc=example,dc=org
-    username_attribute: uid
-    users_filter: (&({username_attribute}={input})(objectClass=person))
+  file:
+    path: /config/users.yml
+    password:
+      algorithm: argon2id
+      iterations: 3
+      key_length: 32
+      salt_length: 16
+      parallelism: 4
+      memory: 64
 
 access_control:
   default_policy: deny

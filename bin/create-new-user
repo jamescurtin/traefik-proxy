@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+
+if [ ! -f "${SCRIPT_DIR}"/../authelia/users.yml ]; then
+	echo "The file authelia/users.yml does not exist!"
+	echo "Follow the instructions in the README to create it."
+	exit 1
+fi
+
+echo -n "Enter username: "
+read -r username
+echo
+
+echo -n "Enter user's display name: "
+read -r displayname
+echo
+
+echo -n "Enter user's email: "
+read -r email
+echo
+
+echo -n "Enter user's password:"
+read -rs password
+echo
+echo
+echo
+echo "Creating user..."
+
+hashed_password=$(docker run --rm -v "${SCRIPT_DIR}"/../authelia:/config authelia/authelia:latest authelia hash-password --config /config/configuration.yml -- "$password" | sed -e "s/^Password hash: //")
+
+cat <<EOT >>"${SCRIPT_DIR}"/../authelia/users.yml
+  $username:
+    displayname: "$displayname"
+    password: "$hashed_password"
+    email: $email
+    groups: []
+EOT
+
+echo "New user has been added to authelia/users.yml."
