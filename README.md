@@ -1,5 +1,8 @@
 # Traefik-Proxy
 
+[![Linting](https://github.com/jamescurtin/traefik-proxy/actions/workflows/lint.yaml/badge.svg)](https://github.com/jamescurtin/traefik-proxy/actions/workflows/lint.yaml)
+[![T](https://github.com/jamescurtin/traefik-proxy/actions/workflows/test.yaml/badge.svg)](https://github.com/jamescurtin/traefik-proxy/actions/workflows/test.yaml)
+
 One-step (secure) configuration for [Traefik](https://docs.traefik.io/) edge router using [Authelia](https://www.authelia.com/) for authentication.
 
 ## Features
