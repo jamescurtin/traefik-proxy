@@ -16,6 +16,7 @@ services:
       AUTHELIA_SESSION_SECRET_FILE: /run/secrets/session
       AUTHELIA_STORAGE_POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
       AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: /run/secrets/storage-encryption-key
+      # CHANGEME: Your timezone
       TZ: America/New_York
     secrets:
       - jwt
@@ -34,7 +35,7 @@ services:
   docker-socket-proxy:
     environment:
       CONTAINERS: 1
-    image: tecnativa/docker-socket-proxy
+    image: tecnativa/docker-socket-proxy:0.1.1
     networks:
       - docker-socket-proxy
     restart: always
@@ -91,7 +92,11 @@ services:
       - ./traefik.yml:/etc/traefik/traefik.yml:ro
 
   whoami:
-    container_name: simple-service
+    image: containous/whoami:v1.5.0
+    networks:
+      - traefik
+
+  secure-whoami:
     image: containous/whoami:v1.5.0
     networks:
       - traefik

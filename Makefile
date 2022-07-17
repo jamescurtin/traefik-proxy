@@ -18,9 +18,18 @@
 .up:
 	@echo "Starting service..." && docker-compose up -d
 
-.PHONY: clean
-.clean:
-	docker-compose down
+.PHONY: down
+.down:
+	@docker-compose down -v || true
 
 .PHONY: target
-target: .create-network .configure-local-settings .build .clean .up
+target: .create-network .configure-local-settings .build .down .up
+
+.PHONY: clean
+clean:
+
+	docker-compose down -v || true
+	rm -f acme/*
+	rm -rf authelia/secrets
+	rm -rf authelia/users.yml
+	rm -f .env
