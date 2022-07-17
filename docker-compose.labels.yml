@@ -5,7 +5,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.authelia.entrypoints=websecure
-      - traefik.http.routers.authelia.rule=Host(`${AUTHELIA_HOST}`)
+      - traefik.http.routers.authelia.rule=Host(`${AUTH_SERVER_HOST}`)
       - traefik.http.routers.authelia.tls.certresolver=letsencrypt
       - traefik.http.routers.authelia.tls=true
   handle-errors:
@@ -18,7 +18,9 @@ services:
   traefik:
     labels:
       - traefik.enable=true
-      - traefik.http.middlewares.auth.forwardauth.address=${AUTHELIA_REDIRECT}
+      - traefik.http.middlewares.auth.forwardauth.address=${AUTH_REDIRECT}
+      - traefik.http.middlewares.auth.forwardauth.trustForwardHeader=true
+      - traefik.http.middlewares.auth.forwardauth.authResponseHeaders=Remote-User,Remote-Groups,Remote-Name,Remote-Email
       - traefik.http.routers.traefik.entrypoints=websecure
       - traefik.http.routers.traefik.middlewares=secured@file
       - traefik.http.routers.traefik.rule=Host(`${TRAEFIK_DASHBOARD_HOST}`)

@@ -1,10 +1,13 @@
-# See https://www.authelia.com/docs/configuration/ for options
-host: 0.0.0.0
-port: 9091
-log_level: debug
+# See https://www.authelia.com/configuration/prologue/introduction/ for options
+server:
+  host: 0.0.0.0
+  port: 9091
+
+log:
+  level: debug
 
 totp:
-  issuer: auth.docker.localhost # CHANGEME: Set as AUTHELIA_HOST
+  issuer: auth.docker.localhost # CHANGEME: Set as AUTH_SERVER_HOST
   period: 30
   skew: 1
 
@@ -56,7 +59,8 @@ storage:
 
 notifier:
   filesystem:
-    filename: /config/notification.txt # CHANGEME: Use the SMTP configuration
+    # CHANGEME: Use the SMTP configuration (see CHANGEME in docker-compose.yml)
+    filename: /config/notification.txt
   # smtp:
   #   username: changeme@gmail.com
   #   sender: no-reply@auth.docker.localhost
