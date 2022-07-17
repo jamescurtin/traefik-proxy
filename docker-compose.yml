@@ -4,13 +4,11 @@ services:
   authelia:
     container_name: authelia
     depends_on:
-      - openldap
       - postgres
       - redis
     env_file:
       - .env
     environment:
-      AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE: /run/secrets/ldap-admin
       AUTHELIA_JWT_SECRET_FILE: /run/secrets/jwt
       # yamllint disable-line rule:line-length
       # CHANGEME: Uncomment the following line if using notifier.smtp in authelia/configuration.yml
@@ -21,7 +19,6 @@ services:
       TZ: America/New_York
     secrets:
       - jwt
-      - ldap-admin
       - postgres-password
       - session
       - smtp
@@ -50,22 +47,6 @@ services:
     networks:
       - traefik
     restart: always
-
-  openldap:
-    container_name: authelia-openldap
-    image: osixia/openldap:1.5.0
-    environment:
-      LDAP_ADMIN_PASSWORD_FILE: /run/secrets/ldap-admin
-      LDAP_CONFIG_PASSWORD_FILE: /run/secrets/ldap-config
-    secrets:
-      - ldap-admin
-      - ldap-config
-    networks:
-      - authelia
-    restart: always
-    volumes:
-      - ldap_db:/var/lib/ldap
-      - ldap_config:/etc/ldap/slapd.d
 
   postgres:
     container_name: authelia-postgres
@@ -124,10 +105,6 @@ secrets:
     file: authelia/secrets/session
   smtp:
     file: authelia/secrets/smtp
-  ldap-admin:
-    file: authelia/secrets/ldap-admin
-  ldap-config:
-    file: authelia/secrets/ldap-config
   storage-encryption-key:
     file: authelia/secrets/storage-encryption-key
 
@@ -139,5 +116,3 @@ networks:
 
 volumes:
   authelia-postgres-data:
-  ldap_config:
-  ldap_db:

@@ -7,6 +7,7 @@
 	@mkdir -p acme
 	@touch -a acme/acme.json && chmod 600 acme/acme.json
 	@cp -n .env.example .env || true
+	@cp -n authelia/users.yml.example authelia/users.yml || true
 	@cp -n -R authelia/secrets.example authelia/secrets && chmod 600 authelia/secrets/* || true
 
 .PHONY: build

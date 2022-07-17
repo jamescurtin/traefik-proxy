@@ -1,0 +1,14 @@
+users:
+  admin-changeme:
+    displayname: "Admin"
+    # The password is "insecure"
+    password: "$argon2id$v=19$m=65536,t=3,p=4$bnZhQTB3TlEyVzgzYUg4UQ$vcdNixglSbsSgi6jaeLUGWL0X48wA9odAKFWwjb2aFo"
+    email: admin-changeme@foobar.com
+    groups:
+      - admin
+  user-changeme:
+    displayname: "User"
+    # The password is "insecure"
+    password: "$argon2id$v=19$m=65536,t=3,p=4$cUJGZllTTjNvNmU4UmR4Sg$quIS1X8prKerzO9vwnnOlklg9EaxwXoYbrqj1oN+HEg"
+    email: user-changeme@foobar.com
+    groups: []

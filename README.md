@@ -39,13 +39,30 @@ customization is necessary are marked with `CHANGEME` comments.
 The command will also create the external docker network `traefik`. Other docker
 services that you plan to expose via Traefik should be added to this network.
 
-## Creating a LDAP user
+## Users
 
-The following will create a default user named `changeme` with the password `insecure`:
+This is configured to use two-factor auth. When running the project out of the box (_i.e._ without having configured the SMTP notifier), you will have to check the file `authelia/notification.txt` to get the registration link for configuring 2FA.
 
-```console
-$ bin/add_user authelia/example.ldif
+Authelia users are defined in `authelia/users.yml`.
+
+By default, this ships with two users (both have the password `insecure`).
+One is a member of a group called `admin`, and the other has no group memberships.
+
+### Creating a user
+
+You will need to create a new user and add them to `authelia/users.yml`.
+As a convenience, you can run the command
+
+```bash
+$ bin/create-new-user
+Enter username:
+...
 ```
+
+which will prompt for the user's information, and add an entry to the user file
+(with a hashed password).
+
+**Make sure to remove the default users before deploying!**
 
 **Note**: When run locally (_e.g._ on `localhost`), Traefik uses a self-signed SSL certificate. Therefore, web-browser security warnings are expected and can be safely bypassed.
 
