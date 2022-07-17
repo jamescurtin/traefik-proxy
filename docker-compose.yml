@@ -12,9 +12,12 @@ services:
     environment:
       AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD_FILE: /run/secrets/ldap-admin
       AUTHELIA_JWT_SECRET_FILE: /run/secrets/jwt
-      AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE: /run/secrets/smtp
+      # yamllint disable-line rule:line-length
+      # CHANGEME: Uncomment the following line if using notifier.smtp in authelia/configuration.yml
+      # AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE: /run/secrets/smtp
       AUTHELIA_SESSION_SECRET_FILE: /run/secrets/session
       AUTHELIA_STORAGE_POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
+      AUTHELIA_STORAGE_ENCRYPTION_KEY_FILE: /run/secrets/storage-encryption-key
       TZ: America/New_York
     secrets:
       - jwt
@@ -22,6 +25,7 @@ services:
       - postgres-password
       - session
       - smtp
+      - storage-encryption-key
     image: authelia/authelia:4.36
     networks:
       - authelia
@@ -124,6 +128,8 @@ secrets:
     file: authelia/secrets/ldap-admin
   ldap-config:
     file: authelia/secrets/ldap-config
+  storage-encryption-key:
+    file: authelia/secrets/storage-encryption-key
 
 networks:
   authelia:

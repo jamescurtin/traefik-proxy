@@ -3,9 +3,18 @@ accessLog: {}
 api:
   dashboard: true
 
+log:
+  level: DEBUG # CHANGEME: Use higher log level instead
+  # level: INFO
+
 certificatesResolvers:
   letsencrypt:
     acme:
+      # CHANGEME: Use a real email (to receive notifications from Let's Encrypt)
+      email: changeme@foobar.com
+      # CHANGEME: This is a staging server. Update to the prod server
+      caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+      # caServer: https://acme-v02.api.letsencrypt.org/directory
       storage: /etc/acme/acme.json
       httpChallenge:
         entryPoint: web
