@@ -1,0 +1,31 @@
+# yamllint disable rule:line-length
+name: Testing
+on: push
+
+jobs:
+  test:
+    name: Make sure services start
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configure
+        run: make
+      - name: Generate auth information
+        run: |
+          echo "basic_auth_header=$(echo -n "admin-changeme:insecure" | base64)" >> $GITHUB_ENV
+      - name: Wait for services to start up
+        run: .github/scripts/wait-for-auth.sh
+      - name: Make sure whoami service starts up
+        run: .github/scripts/assert.sh "whoami.docker.localhost" "IP"
+      - name: Make sure traefik service prompts for auth
+        run: .github/scripts/assert.sh "traefik.docker.localhost" "https://auth.docker.localhost"
+      - name: Make sure traefik service can be logged in
+        run:
+          .github/scripts/assert.sh "traefik.docker.localhost" "<a href=\"/dashboard/\">Found</a>"
+          "${{ env.basic_auth_header }}"
+      - name: Make sure traefik service cannot be logged in with bad password
+        run: .github/scripts/assert.sh "traefik.docker.localhost" "Unauthorized" "bad_auth_header"
+      - name: Make sure secure service prompts for auth
+        run: .github/scripts/assert.sh "secure.docker.localhost" "https://auth.docker.localhost"
+      - name: Make sure secure service cannot be accessed without 2fa
+        run: .github/scripts/assert.sh "secure.docker.localhost" "Unauthorized" "${{ env.basic_auth_header }}"
