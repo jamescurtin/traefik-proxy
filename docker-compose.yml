@@ -24,7 +24,7 @@ services:
       - session
       - smtp
       - storage-encryption-key
-    image: authelia/authelia:4.36
+    image: authelia/authelia:4.36.4
     networks:
       - authelia
       - traefik
@@ -66,7 +66,7 @@ services:
 
   redis:
     container_name: authelia-redis
-    image: redis:7.0-alpine
+    image: redis:6.2.7-alpine
     restart: always
     networks:
       - authelia
@@ -78,7 +78,7 @@ services:
       - handle-errors
     env_file:
       - .env
-    image: traefik:v2.8
+    image: traefik:v2.8.3
     networks:
       - docker-socket-proxy
       - traefik
