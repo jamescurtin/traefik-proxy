@@ -24,7 +24,7 @@ services:
       - session
       - smtp
       - storage-encryption-key
-    image: authelia/authelia:4.36.7
+    image: authelia/authelia:4.36.8
     networks:
       - authelia
       - traefik
