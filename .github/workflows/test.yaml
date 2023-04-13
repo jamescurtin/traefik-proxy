@@ -21,8 +21,8 @@ jobs:
         run: .github/scripts/assert.sh "traefik.docker.localhost" "https://auth.docker.localhost"
       - name: Make sure traefik service can be logged in
         run:
-          .github/scripts/assert.sh "traefik.docker.localhost" "<a href=\"/dashboard/\">Found</a>"
-          "${{ env.basic_auth_header }}"
+          .github/scripts/assert.sh "traefik.docker.localhost" "<a href=\"/dashboard/\">Found</a>" "${{
+          env.basic_auth_header }}"
       - name: Make sure traefik service cannot be logged in with bad password
         run: .github/scripts/assert.sh "traefik.docker.localhost" "Unauthorized" "bad_auth_header"
       - name: Make sure secure service prompts for auth

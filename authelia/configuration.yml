@@ -63,6 +63,7 @@ storage:
     username: authelia
 
 notifier:
+  disable_startup_check: true
   filesystem:
     # CHANGEME: Use the SMTP configuration (see CHANGEME in docker-compose.yml)
     filename: /config/notification.txt
@@ -71,3 +72,5 @@ notifier:
   #   sender: no-reply@auth.docker.localhost
   #   host: smtp.gmail.com
   #   port: 587
+
+theme: auto

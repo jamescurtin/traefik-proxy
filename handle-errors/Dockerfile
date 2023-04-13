@@ -15,7 +15,7 @@ RUN adduser \
 WORKDIR $GOPATH/src
 COPY main.go go.mod ./
 
-RUN CGO_ENABLED=0 go build \
+RUN CGO_ENABLED=0 GOOS=linux go build \
     -ldflags='-w -s -extldflags "-static"' -a \
     -o /go/bin/serve .
 
