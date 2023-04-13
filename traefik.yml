@@ -29,6 +29,9 @@ global:
   checkNewVersion: true
   sendAnonymousUsage: false
 
+serversTransport:
+  insecureSkipVerify: true
+
 providers:
   docker:
     endpoint: tcp://docker-socket-proxy:2375

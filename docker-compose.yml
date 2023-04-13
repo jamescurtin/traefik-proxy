@@ -30,9 +30,11 @@ services:
       - traefik
     restart: always
     volumes:
-      - ./authelia:/config
+      - ./authelia:/config:ro
+      - ./authelia/secrets:/etc/secrets
 
   docker-socket-proxy:
+    container_name: docker-socket-proxy
     environment:
       CONTAINERS: 1
     image: tecnativa/docker-socket-proxy:0.1.1
@@ -66,7 +68,7 @@ services:
 
   redis:
     container_name: authelia-redis
-    image: redis:7.0.10-alpine
+    image: redis:7.0.9-alpine
     restart: always
     networks:
       - authelia
@@ -78,7 +80,7 @@ services:
       - handle-errors
     env_file:
       - .env
-    image: traefik:v2.9.10
+    image: traefik:v2.9.9
     networks:
       - docker-socket-proxy
       - traefik

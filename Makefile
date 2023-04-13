@@ -12,15 +12,15 @@
 
 .PHONY: build
 .build:
-	@echo "Building docker images..." && docker-compose build 2>&1 >/dev/null
+	@echo "Building docker images..." && docker compose build 2>&1 >/dev/null
 
 .PHONY: up
 .up:
-	@echo "Starting service..." && docker-compose up -d
+	@echo "Starting service..." && docker compose up -d
 
 .PHONY: down
 .down:
-	@docker-compose down -v || true
+	@docker compose down -v || true
 
 .PHONY: target
 target: .create-network .configure-local-settings .build .down .up
@@ -28,7 +28,7 @@ target: .create-network .configure-local-settings .build .down .up
 .PHONY: clean
 clean:
 
-	docker-compose down -v || true
+	docker compose down -v || true
 	rm -f acme/*
 	rm -rf authelia/secrets
 	rm -rf authelia/users.yml
