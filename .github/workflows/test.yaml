@@ -10,6 +10,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: Configure
         run: make
+      - name: Ensure no placeholder secrets
+        run: .github/scripts/no-default-secrets.sh
       - name: Generate auth information
         run: |
           echo "basic_auth_header=$(echo -n "admin-changeme:insecure" | base64)" >> $GITHUB_ENV

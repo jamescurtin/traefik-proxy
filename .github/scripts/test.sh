@@ -55,3 +55,6 @@ shfmt -l -w -s .
 
 echo "Running yamllint..."
 yamllint .
+
+echo "Ensure no placeholder secrets..."
+.github/scripts/no-default-secrets.sh
