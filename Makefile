@@ -9,6 +9,7 @@
 	@cp -n .env.example .env || true
 	@cp -n authelia/users.yml.example authelia/users.yml || true
 	@cp -n -R authelia/secrets.example authelia/secrets && chmod 600 authelia/secrets/* || true
+	@./bin/populate-secrets.sh
 
 .PHONY: build
 .build:
