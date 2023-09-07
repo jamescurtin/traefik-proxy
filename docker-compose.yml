@@ -68,7 +68,7 @@ services:
 
   redis:
     container_name: authelia-redis
-    image: redis:7.2.0-alpine
+    image: redis:7.2.1-alpine
     restart: always
     networks:
       - authelia
