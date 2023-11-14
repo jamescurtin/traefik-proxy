@@ -59,7 +59,7 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
     secrets:
       - postgres-password
-    image: postgres:16.0-alpine
+    image: postgres:16.1-alpine
     networks:
       - authelia
     restart: always
