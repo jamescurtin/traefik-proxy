@@ -6,22 +6,22 @@ jobs:
     name: Run yaml linting
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-      - name: Configure Python 3.8
+      - uses: actions/checkout@v4.1.1
+      - name: Configure Python 3.12
         uses: actions/setup-python@v5
         with:
-          python-version: "3.8"
+          python-version: "3.12"
       - name: Install yamllint
-        run: pip install yamllint==1.24.2
+        run: pip install yamllint==1.34.0
       - name: Run yamllint
         run: yamllint .
   shellcheck:
     name: Shellcheck
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      - uses: actions/checkout@v4.1.1
       - name: Run ShellCheck
-        uses: ludeeus/action-shellcheck@cd81f4475ab741e097ec0fe73b692f3e49d66b8c
+        uses: ludeeus/action-shellcheck@2.0.0
         with:
           check_together: "yes"
         env:
@@ -30,10 +30,10 @@ jobs:
     name: Shell format
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      - uses: actions/checkout@v4.1.1
       - uses: actions/setup-go@v5
         with:
-          go-version: 1.18.x
+          go-version: 1.22.x
       - name: Install shfmt
         run: go install mvdan.cc/sh/v3/cmd/shfmt@latest
       - name: Check formatting
