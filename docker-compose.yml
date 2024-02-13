@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.8"
 
 services:
   authelia:
@@ -94,12 +94,12 @@ services:
       - ./traefik.yml:/etc/traefik/traefik.yml:ro
 
   whoami:
-    image: containous/whoami:v1.5.0
+    image: traefik/whoami:v1.10
     networks:
       - traefik
 
   secure-whoami:
-    image: containous/whoami:v1.5.0
+    image: traefik/whoami:v1.10
     networks:
       - traefik
 
