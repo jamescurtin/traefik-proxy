@@ -59,7 +59,7 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres-password
     secrets:
       - postgres-password
-    image: postgres:16.1-alpine
+    image: postgres:16.2-alpine
     networks:
       - authelia
     restart: always
@@ -68,7 +68,7 @@ services:
 
   redis:
     container_name: authelia-redis
-    image: redis:7.2.3-alpine
+    image: redis:7.2.4-alpine
     restart: always
     networks:
       - authelia
