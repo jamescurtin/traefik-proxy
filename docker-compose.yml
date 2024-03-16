@@ -80,7 +80,7 @@ services:
       - handle-errors
     env_file:
       - .env
-    image: traefik:v2.11.0
+    image: traefik:v3.0.0-rc3
     networks:
       - docker-socket-proxy
       - traefik
