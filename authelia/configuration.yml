@@ -45,8 +45,8 @@ session:
   inactivity: 300 # 5 minutes
   cookies:
     - domain: docker.localhost # CHANGEME: domain associated with the login subdomain
-      authelia_url: "https://auth.docker.localhost" # CHANGEME: Set as AUTH_SERVER_HOST
-      default_redirection_url: "https://docker.localhost" # CHANGEME: Set as desired redirection URL
+      authelia_url: https://auth.docker.localhost # CHANGEME: Set as AUTH_SERVER_HOST
+      default_redirection_url: https://docker.localhost # CHANGEME: Set as desired redirection URL
 
   redis:
     host: authelia-redis
