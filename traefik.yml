@@ -18,6 +18,10 @@ certificatesResolvers:
       storage: /etc/acme/acme.json
       httpChallenge:
         entryPoint: web
+      # CHANGEME: If you'd like to use the DNS challenge for a wildcard cert.
+      # See https://doc.traefik.io/traefik/https/acme/#dnschallenge
+      # dnsChallenge:
+      #   provider: TODO
 
 entryPoints:
   web:
