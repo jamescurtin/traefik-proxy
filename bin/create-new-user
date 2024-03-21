@@ -27,7 +27,7 @@ echo
 echo
 echo "Creating user..."
 
-hashed_password=$(docker run --rm -v "${SCRIPT_DIR}"/../authelia:/config authelia/authelia:latest authelia hash-password --config /config/configuration.yml -- "$password" | sed -e "s/^Digest: //")
+hashed_password=$(docker run --rm -v "${SCRIPT_DIR}"/../authelia:/config authelia/authelia:latest authelia crypto hash generate argon2 --config /config/configuration.yml --password "$password" | sed -e "s/^Digest: //")
 
 cat <<EOT >>"${SCRIPT_DIR}"/../authelia/users.yml
   $username:

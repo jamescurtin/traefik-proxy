@@ -9,7 +9,7 @@ services:
     env_file:
       - .env
     environment:
-      AUTHELIA_JWT_SECRET_FILE: /run/secrets/jwt
+      AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET_FILE: /run/secrets/jwt
       # yamllint disable-line rule:line-length
       # CHANGEME: Uncomment the following line if using notifier.smtp in authelia/configuration.yml
       # AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE: /run/secrets/smtp
