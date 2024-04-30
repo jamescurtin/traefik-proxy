@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   authelia:
     container_name: authelia
@@ -80,7 +78,7 @@ services:
       - handle-errors
     env_file:
       - .env
-    image: traefik:v3.0.0-rc3
+    image: traefik:v3.0.0
     networks:
       - docker-socket-proxy
       - traefik
