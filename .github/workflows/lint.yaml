@@ -6,7 +6,7 @@ jobs:
     name: Run yaml linting
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.1.5
+      - uses: actions/checkout@v4.1.6
       - name: Configure Python 3.12
         uses: actions/setup-python@v5
         with:
@@ -19,7 +19,7 @@ jobs:
     name: Shellcheck
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.1.5
+      - uses: actions/checkout@v4.1.6
       - name: Run ShellCheck
         uses: ludeeus/action-shellcheck@2.0.0
         with:
@@ -30,7 +30,7 @@ jobs:
     name: Shell format
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.1.5
+      - uses: actions/checkout@v4.1.6
       - uses: actions/setup-go@v5
         with:
           go-version: 1.22.x
