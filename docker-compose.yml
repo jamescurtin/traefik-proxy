@@ -35,7 +35,7 @@ services:
     container_name: docker-socket-proxy
     environment:
       CONTAINERS: 1
-    image: tecnativa/docker-socket-proxy:0.2.0
+    image: tecnativa/docker-socket-proxy:0.3.0
     networks:
       - docker-socket-proxy
     restart: always
