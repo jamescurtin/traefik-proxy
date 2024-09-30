@@ -22,7 +22,7 @@ services:
       - session
       - smtp
       - storage-encryption-key
-    image: authelia/authelia:4.38.14
+    image: authelia/authelia:4.38.15
     networks:
       - authelia
       - traefik
