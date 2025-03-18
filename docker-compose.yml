@@ -92,12 +92,12 @@ services:
       - ./traefik.yml:/etc/traefik/traefik.yml:ro
 
   whoami:
-    image: traefik/whoami:v1.10
+    image: traefik/whoami:v1.11
     networks:
       - traefik
 
   secure-whoami:
-    image: traefik/whoami:v1.10
+    image: traefik/whoami:v1.11
     networks:
       - traefik
 
