@@ -2,6 +2,10 @@
 .create-network:
 	@docker network create traefik 2> /dev/null && echo "Created network traefik" || echo "Network traefik already exists"
 
+.PHONY: create-volume
+.create-volume:
+	@docker volume create authelia-postgres-data 2> /dev/null && echo "Created volume authelia-postgres-data" || echo "Network authelia-postgres-data already exists"
+
 .PHONY: configure-local-settings
 .configure-local-settings:
 	@mkdir -p acme
@@ -24,7 +28,7 @@
 	@docker compose down -v || true
 
 .PHONY: target
-target: .create-network .configure-local-settings .build .down .up
+target: .create-network .create-volume .configure-local-settings .build .down .up
 
 .PHONY: clean
 clean:
@@ -34,3 +38,4 @@ clean:
 	rm -rf authelia/secrets
 	rm -rf authelia/users.yml
 	rm -f .env
+ 
