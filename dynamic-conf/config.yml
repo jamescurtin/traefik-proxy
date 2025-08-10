@@ -1,3 +1,9 @@
+x-default-router: &default-router
+  middlewares:
+    - secured
+  tls:
+    certResolver: letsencrypt
+
 http:
   middlewares:
     secured:
@@ -26,11 +32,24 @@ http:
       middlewares:
         - redirect-to-https
         - error-pages
-      rule: hostregexp(`{host:.+}`)
+      priority: 9999
+      rule: HostRegexp(`{host:.+}`)
       service: noop
+
+    # Example of a router
+    my-router:
+      <<: *default-router
+      rule: Host(`mysubdomain.docker.local`)
+      service: my-service
 
   services:
     noop:
       loadBalancer:
         servers:
           - url: http://192.168.0.1
+
+    # Example of a service
+    my-service:
+      loadBalancer:
+        servers:
+          - url: http://192.168.1.23:8123

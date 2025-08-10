@@ -24,7 +24,7 @@ authentication_backend:
 # Read https://www.authelia.com/configuration/security/access-control/ carefully
 # It is easy to misconfigure these.
 access_control:
-  default_policy: deny
+  default_policy: one_factor
   rules:
     # CHANGEME: Configure for your hosts.
     # The auth domain should always be set to bypass.

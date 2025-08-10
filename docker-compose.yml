@@ -121,3 +121,4 @@ networks:
 
 volumes:
   authelia-postgres-data:
+    external: true
