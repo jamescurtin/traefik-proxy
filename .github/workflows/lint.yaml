@@ -10,7 +10,7 @@ jobs:
       - name: Configure Python 3.12
         uses: actions/setup-python@v6
         with:
-          python-version: "3.13"
+          python-version: "3.14"
       - name: Install yamllint
         run: pip install yamllint==1.34.0
       - name: Run yamllint
