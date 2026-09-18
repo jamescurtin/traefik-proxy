@@ -1,5 +1,13 @@
 {
-  "extends": [
-    "config:base"
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "minimumReleaseAge": "7 days",
+  "platformAutomerge": true,
+  "packageRules": [
+    {
+      "description": "Automerge routine (patch/minor/digest) updates via GitHub's native auto-merge, gated on the repo's real required status checks; majors always stay manual.",
+      "matchUpdateTypes": ["patch", "minor", "digest"],
+      "automerge": true
+    }
   ]
 }
